@@ -18,6 +18,12 @@ fi
 echo -e "${YELLOW}正在检测并安装依赖 (curl, wget, tar, jq)...${NC}"
 apt update -qq && apt install -y curl wget tar jq > /dev/null 2>&1
 
+# 在脚本里检测 jq 是否安装成功
+if ! command -v jq &> /dev/null; then
+    echo -e "${RED}错误：jq 安装失败，请检查你的 apt 源是否正常。${NC}"
+    exit 1
+fi
+
 # 3. 架构检测
 ARCH=$(uname -m)
 case ${ARCH} in
